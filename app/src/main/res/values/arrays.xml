@@ -1,0 +1,15 @@
+<resources>
+
+    <string-array name="categories">
+        <item>All</item>
+        <item>Home</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Call</item>
+        <item>Travel</item>
+        <item>Food</item>
+        <item>Shopping</item>
+        <item>Others</item>
+    </string-array>
+
+</resources>

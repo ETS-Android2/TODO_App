@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:id="@+id/coordinator"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TodoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="false">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/white"
+            app:layout_scrollFlags="noScroll"
+            app:navigationIcon="@drawable/ic_baseline_close_24_black"
+            app:title="@string/new_task"
+            app:titleTextColor="#AE332F2F" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        android:layout_gravity="center_horizontal"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        android:layout_marginBottom="10dp">
+    </com.google.android.gms.ads.AdView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Scrollable content -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            tools:context=".AddActivity">
+
+            <com.google.android.material.textfield.TextInputLayout
+                app:errorEnabled="true"
+                android:id="@+id/planning"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="@string/planning"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                app:startIconDrawable="@drawable/add_class_24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addCategory"
+                android:layout_below="@id/planning"
+                android:layout_marginTop="20dp"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:drawablePadding="20dp"
+                    android:hint="@string/category"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <EditText
+                android:id="@+id/addTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addCategory"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/add_calendar_today_24"
+                android:drawablePadding="30dp"
+                android:padding="10dp"
+                android:backgroundTint="@color/Transparent"
+                android:focusable="false"
+                android:maxLines="1"
+                android:autofillHints="" />
+
+
+
+            <EditText
+                android:id="@+id/addNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addTime"
+                android:layout_marginTop="20dp"
+                android:minLines="1"
+                android:maxHeight="100dp"
+                android:drawableStart="@drawable/add_note_24"
+                android:drawablePadding="30dp"
+                android:hint="@string/add_a_note"
+                android:padding="10dp"
+                android:backgroundTint="@color/Transparent"/>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/numberRelative"
+                android:layout_below="@id/addNote"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/addNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:drawableLeft="@drawable/add_local_phone_24"
+                    android:drawablePadding="30dp"
+                    android:hint="@string/add_phone_number"
+                    android:padding="10dp"
+                    android:backgroundTint="@color/Transparent"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    android:paddingVertical="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/contactBtn"
+                    android:src="@drawable/add_contacts_24"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchLinear"
+                android:layout_below="@id/numberRelative"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/remindBtn"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/add_outline_notifications_24"
+                    android:contentDescription="TODO" />
+
+                <TextView
+                    android:textStyle="italic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remind_me"
+                    android:layout_marginStart="10dp"
+                    android:textColor="#5B5E5B"
+                    android:layout_toEndOf="@+id/remindBtn"
+                    android:layout_centerVertical="true"
+                    android:textSize="18sp"/>
+
+                <com.github.angads25.toggle.widget.LabeledSwitch
+                    android:id="@+id/labeledSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    app:on="true"
+                    app:textOn="ON"
+                    app:textOff="OFF"
+                    app:colorOn="@color/my_primary_color"
+                    app:colorBorder="@color/my_primary_color"
+                    android:layout_alignParentEnd="true"/>
+
+
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/createBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/switchLinear"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="20dp"
+                android:layout_alignParentBottom="true"
+                android:paddingVertical="15dp"
+                android:text="@string/create"
+                android:textSize="15sp"
+                android:backgroundTint="#8765C3"/>
+
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
