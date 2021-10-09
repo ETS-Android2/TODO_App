@@ -52,7 +52,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private boolean isAllBtn = false;
     private AppBarRecyclerAdapter appBarRecyclerAdapter;
     private Button allBtn;
-    private long dateSelectedMilli = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+    private long dateSelectedMilli = MaterialDatePicker.todayInUtcMilliseconds();
     private MaterialDatePicker.Builder<Long> builder;
 
 
@@ -175,7 +175,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             appBarRecyclerAdapter.checkDate(calendar.getTime());
             filterListByDate(calendar.getTime());
             dateSelectedMilli = (long) selection;
-            Toast.makeText(this, calendar.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, calendar.toString(), Toast.LENGTH_SHORT).show();
         });
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
