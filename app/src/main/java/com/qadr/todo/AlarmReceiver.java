@@ -120,7 +120,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent markPendingIntent =
                 PendingIntent.getBroadcast(context, (int) work.getUid(), markIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.add_notifications_active_24);
+        builder.setSmallIcon(R.mipmap.app_notification);
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(work.getName());
         if(work.getName().length() > 30 || !work.getNote().isEmpty()){

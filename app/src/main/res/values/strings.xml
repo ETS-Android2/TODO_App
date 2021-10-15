@@ -13,6 +13,7 @@
     <string name="contact_reason">This application needs to read your contacts list</string>
     <string name="update">Update</string>
     <string name="category">Category</string>
+    <string name="add_category">Add Category</string>
     <string name="add_a_note">Add a note</string>
     <string name="list">List</string>
 
@@ -55,6 +56,9 @@
     <string name="customize">Customize</string>
     <string name="already_exist">Already exist</string>
     <string name="task_done_or_not">show whether a task has been done or not</string>
+    <string name="pending_summary">if you don\'t want to receive notification for the task already scheduled after clearing all the tasks</string>
+    <string name="clear_summary">Clear all saved task, This action cannot be undone</string>
+    <string name="call_summary">For call tasks reminder, Choose whether to make call directly or go to dialer</string>
 
 
 </resources>

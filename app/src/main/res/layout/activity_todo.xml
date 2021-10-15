@@ -21,7 +21,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/yellow"
             android:background="@color/Transparent"
             android:elevation="0dp"/>
 
@@ -38,7 +38,7 @@
                 android:layout_marginStart="10dp"
                 android:text="@string/all"
                 android:paddingHorizontal="10dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/yellow"/>
 
 
             <ImageView
@@ -94,8 +94,9 @@
                 android:textSize="18sp"
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/icon"
+                android:fontFamily="@font/google_sofia"
                 android:text="@string/no_task"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
             <RelativeLayout
@@ -155,9 +156,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="#8765C3"
-        app:rippleColor="#8765C3"
+        android:backgroundTint="@color/my_primary_color"
         android:layout_gravity="bottom|end"
+        android:tint="@color/red"
+        app:tint="@color/red"
         android:src="@drawable/ic_baseline_plus_24"
         android:contentDescription="@string/add_task" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

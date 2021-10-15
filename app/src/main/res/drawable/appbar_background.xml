@@ -8,7 +8,7 @@
         android:left="1dp"/>
 
     <solid
-        android:color="?attr/colorPrimary" />
+        android:color="@color/my_primary_color" />
 
     <corners
         android:radius="10dp"/>

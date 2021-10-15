@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodoActivity">
+    tools:context=".AddActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             app:layout_scrollFlags="noScroll"
             app:navigationIcon="@drawable/ic_baseline_close_24_black"
             app:title="@string/new_task"
+            android:textAlignment="center"
             app:titleTextColor="#AE332F2F" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -36,8 +37,8 @@
         ads:adSize="BANNER"
         android:layout_gravity="center_horizontal"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        android:layout_marginBottom="10dp">
-    </com.google.android.gms.ads.AdView>
+        android:layout_marginBottom="10dp"
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -45,20 +46,22 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- Scrollable content -->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="30dp"
             android:paddingVertical="10dp"
-            tools:context=".AddActivity">
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 app:errorEnabled="true"
                 android:id="@+id/planning"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/planning"
+                app:startIconDrawable="@drawable/ic_baseline_next_plan_24"
+                app:startIconTint="#C0473C"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -69,13 +72,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
             <com.google.android.material.textfield.TextInputLayout
                 app:startIconDrawable="@drawable/add_class_24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/addCategory"
-                android:layout_below="@id/planning"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 app:errorEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
@@ -96,7 +100,6 @@
                 android:id="@+id/addTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/addCategory"
                 android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/add_calendar_today_24"
                 android:drawablePadding="30dp"
@@ -107,20 +110,25 @@
                 android:autofillHints="" />
 
 
-
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                app:errorEnabled="true"
                 android:id="@+id/addNote"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/addTime"
-                android:layout_marginTop="20dp"
-                android:minLines="1"
-                android:maxHeight="100dp"
-                android:drawableStart="@drawable/add_note_24"
-                android:drawablePadding="30dp"
+                android:layout_height="80dp"
                 android:hint="@string/add_a_note"
-                android:padding="10dp"
-                android:backgroundTint="@color/Transparent"/>
+                android:layout_marginTop="20dp"
+                app:startIconDrawable="@drawable/add_note_24"
+                app:startIconTint="@color/yellow"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
                 android:visibility="gone"
@@ -128,7 +136,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/numberRelative"
-                android:layout_below="@id/addNote"
                 android:layout_marginTop="20dp">
 
                 <EditText
@@ -158,9 +165,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/switchLinear"
-                android:layout_below="@id/numberRelative"
                 android:layout_marginTop="15dp"
-                android:padding="10dp"
+                android:paddingVertical="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -204,18 +210,14 @@
                 android:id="@+id/createBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/switchLinear"
                 android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="20dp"
-                android:layout_alignParentBottom="true"
                 android:paddingVertical="15dp"
                 android:text="@string/create"
                 android:textSize="15sp"
-                android:backgroundTint="#8765C3"/>
+                android:backgroundTint="@color/my_primary_color"/>
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

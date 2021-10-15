@@ -1,8 +1,10 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:key="notifications_category"
-        app:title="Notifications">
+        app:title="Notifications"
+        android:icon="@drawable/settings_notification">
 
         <SwitchPreferenceCompat
             app:key="notifications"
@@ -32,11 +34,12 @@
 
     <PreferenceCategory
         app:key="call_category"
-        app:title="Call">
+        app:title="Call"
+        android:icon="@drawable/settings_call">
 
         <SwitchPreferenceCompat
             app:key="call"
-            app:summary="For call tasks reminder, Choose whether to make call directly or go to dialer"
+            app:summary="@string/call_summary"
             app:title="Direct Call"
             app:defaultValue="false"/>
 
@@ -44,17 +47,19 @@
 
     <PreferenceCategory
         app:key="storage_category"
-        app:title="Storage">
+        app:title="Storage"
+        android:icon="@drawable/settings_storage">
 
         <Preference
             app:key="clear"
-            app:summary="Clear all saved task, This action cannot be undone"
+            app:summary="@string/clear_summary"
             app:title="Clear All Tasks"
             />
 
         <SwitchPreferenceCompat
+            app:defaultValue="true"
             app:title="Cancel pending notifications"
-            app:summary="if you don't want to receive notification for the task already scheduled after clearing all the tasks"
+            app:summary="@string/pending_summary"
             app:key="cancel_notification"/>
 
     </PreferenceCategory>

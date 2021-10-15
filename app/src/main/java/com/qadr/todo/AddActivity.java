@@ -1,6 +1,7 @@
 package com.qadr.todo;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,7 +18,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,9 +57,9 @@ import static com.qadr.todo.MyListAdapter._icons;
 public class AddActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int PERMISSION_CONTACT_CODE = 101, READ_CONTACT_CODE = 100, SETTINGS_CODE = 102;
     private String from = "";
-    private EditText dateTime, note, number;
-    private TextInputLayout inputLayout, categoryInput;
-    private TextInputEditText name;
+    private EditText dateTime, number;
+    private TextInputLayout inputLayout, categoryInput, noteLayout;
+    private TextInputEditText name, note;
     private ImageView contactBtn;
     private RelativeLayout numberRelative;
     private AutoCompleteTextView category;
@@ -114,7 +120,8 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             }else { numberRelative.setVisibility(View.GONE); }
         });
         if(from != null && from.equalsIgnoreCase("call"))numberRelative.setVisibility(View.VISIBLE);
-        note = findViewById(R.id.addNote);
+        note = findViewById(R.id.note);
+        noteLayout = findViewById(R.id.addNote);
         createBtn = findViewById(R.id.createBtn);
         dateTime.setOnClickListener(this);
         createBtn.setOnClickListener(this);
@@ -274,9 +281,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             selectContact();
         }else {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)){
-                showSnackBar();
+                contactRequestPermission.launch(Manifest.permission.READ_CONTACTS);
             }else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_CONTACT_CODE);
+                showSnackBar();
             }
         }
     }
@@ -285,8 +292,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Snackbar.make(parentLayout, R.string.contact_reason, Snackbar.LENGTH_LONG)
                 .setAction(R.string.grant_permission, v -> {
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.setData(Uri.parse("package:"+ getPackageName()));
-                    startActivityForResult(intent, SETTINGS_CODE);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    appSettingsIntent.launch(intent);
                 }).show();
     }
 
@@ -294,27 +302,42 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, READ_CONTACT_CODE);
+            contactSelectIntent.launch(intent);
         }else{
-            Log.e("selectContact: ", "No app to handle this intent");
+            Toast.makeText(this, "No app to handle this action", Toast.LENGTH_SHORT).show();
+            Log.i("selectContact: ", "No app to handle this read contact intent");
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CONTACT_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) selectContact();
+    public static <T> List<T> removeFromList(List<T> list, int index){
+        List<T> newList = new ArrayList<>();
+        int count = 0;
+        for (T s : list){
+            if(index != count){
+                newList.add(s);
+            }
+            count++;
         }
+        return newList;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case READ_CONTACT_CODE:
-                if (resultCode == RESULT_OK) {
-                    if ((data != null ? data.getData() : null) != null) {
+    ActivityResultLauncher<String> contactRequestPermission = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            result -> {
+                if (result) {
+                    selectContact();
+                } else {
+                    showSnackBar();
+                }
+            }
+    );
+
+    ActivityResultLauncher<Intent> contactSelectIntent = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null && data.getData() != null) {
                         Uri contactUri = data.getData();
                         String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
                         Cursor cursor = getContentResolver().query(contactUri, projection,
@@ -331,25 +354,13 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                     }
 
                 }
-                break;
-            case SETTINGS_CODE:
-                if(resultCode == RESULT_OK) checkContactPermission();
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public static <T> List<T> removeFromList(List<T> list, int index){
-        List<T> newList = new ArrayList<>();
-        int count = 0;
-        for (T s : list){
-            if(index != count){
-                newList.add(s);
             }
-            count++;
-        }
-        return newList;
-    }
+    );
+
+    ActivityResultLauncher<Intent> appSettingsIntent = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                checkContactPermission();
+            }
+    );
 }

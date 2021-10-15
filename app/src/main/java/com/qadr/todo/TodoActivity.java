@@ -2,6 +2,7 @@ package com.qadr.todo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +64,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         setContentView(R.layout.activity_todo);
         new Thread(() -> {
             createDateNavigation();
-            runOnUiThread(()->{
+            runOnUiThread(() -> {
                 // initialize the date navigation
                 RecyclerView appBarRecycler = findViewById(R.id.appbarRecyclerview);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TodoActivity.this);
@@ -94,17 +95,8 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         allBtn = findViewById(R.id.all_btn);
         allBtn.setOnClickListener(v -> {
-            if (!isAllBtn) {
-                if(!allList.isEmpty()){
-                    dateSelectedMilli = 0;
-                    separateWorks(allList);
-                    isAllBtn = true;
-                    appBarRecyclerAdapter.changeActiveBackground(-1);
-                    v.setBackgroundColor(getResources().getColor(R.color.white));
-                    if (noTaskTextView.getVisibility() == View.VISIBLE) {
-                        noTaskTextView.setVisibility(View.GONE);
-                    }
-                }
+            if(!isAllBtn) {
+                showAll();
             }
         });
 
@@ -136,16 +128,15 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         Date todayDate = calendar.getTime();
         int thisMonth = calendar.get(Calendar.MONTH);
-        int nextMonth = thisMonth + 1, previousMonth = thisMonth - 1;
-        if (nextMonth > 11 || previousMonth < 0) {
-            nextMonth = nextMonth > 11 ? nextMonth - 12 : nextMonth;
-            previousMonth = previousMonth < 0 ? 12 + previousMonth : previousMonth;
-        }
+        int nextMonth = (thisMonth + 1) % 12;
+        int previousMonth = (thisMonth - 1);
+        previousMonth = (previousMonth < 0)? 12 + previousMonth : previousMonth;
+
         // add today date to the list first
         dateArrayList.add(new AppBarRecyclerAdapter.ADate(todayDate));
         // add a month before
         while ((calendar.get(Calendar.MONTH)) == thisMonth || calendar.get(Calendar.MONTH) == previousMonth) {
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            calendar.add(Calendar.DATE, -1);
             if (calendar.get(Calendar.MONTH) == thisMonth || calendar.get(Calendar.MONTH) == previousMonth) {
                 dateArrayList.add(0, new AppBarRecyclerAdapter.ADate(calendar.getTime()));
             }
@@ -158,7 +149,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
         // add a month after today to the list
         while (calendar.get(Calendar.MONTH) == thisMonth || calendar.get(Calendar.MONTH) == nextMonth) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.DATE, 1);
             if (calendar.get(Calendar.MONTH) == thisMonth || calendar.get(Calendar.MONTH) == nextMonth) {
                 dateArrayList.add(new AppBarRecyclerAdapter.ADate(calendar.getTime()));
             }
@@ -224,6 +215,19 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         }
     }
 
+    private void showAll(){
+        if(!allList.isEmpty()){
+            dateSelectedMilli = 0;
+            separateWorks(allList);
+            isAllBtn = true;
+            appBarRecyclerAdapter.changeActiveBackground(-1);
+            allBtn.setBackgroundColor(getResources().getColor(R.color.white));
+            if (noTaskTextView.getVisibility() == View.VISIBLE) {
+                noTaskTextView.setVisibility(View.GONE);
+                noTaskTextView.setText(R.string.no_task);
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bar_menu, menu);
@@ -231,16 +235,8 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         searchView.setQueryHint("Search");
         searchView.setIconifiedByDefault(true);
         searchView.setOnCloseListener(() -> {
-            if (allList != null && !allList.isEmpty()) {
-                if (searchView.getQuery().toString().isEmpty()) {
-                    separateWorks(allList);
-                    dateSelectedMilli = 0;
-                    appBarRecyclerAdapter.changeActiveBackground(-1);
-                    isAllBtn = true;
-                    allBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    noTaskTextView.setVisibility(View.GONE);
-                    noTaskTextView.setText(noText);
-                }
+            if (searchView.getQuery().toString().isEmpty()) {
+                showAll();
             }
             searchView.onActionViewCollapsed();
             return false;
