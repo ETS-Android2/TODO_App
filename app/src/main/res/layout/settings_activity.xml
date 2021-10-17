@@ -24,6 +24,9 @@
             app:title="@string/title_activity_settings"/>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+<!--    test ad unit="ca-app-pub-3940256099942544/6300978111"-->
+
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
@@ -31,9 +34,10 @@
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
             android:layout_gravity="center_horizontal"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:adUnitId="ca-app-pub-9146947512063516/8492318053"
             android:layout_marginBottom="10dp">
         </com.google.android.gms.ads.AdView>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

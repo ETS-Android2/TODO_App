@@ -18,9 +18,12 @@
             app:summary="vibrate on new notification"
             app:defaultValue="true"/>
 
-        <Preference
-            app:key="ringtone"
-            app:title="Notification Tone"
+        <com.qadr.todo.CustomListPreference
+            app:allowDividerBelow="true"
+            app:entries="@array/ten_tones"
+            app:entryValues="@array/ten_tones"
+            app:key="tone_list"
+            app:title="Notification Sound"
             app:dependency="notifications"/>
 
         <SwitchPreferenceCompat

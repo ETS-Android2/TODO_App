@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,13 +22,11 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -40,16 +39,32 @@ import com.google.android.material.snackbar.Snackbar;
 import com.qadr.todo.databasefiles.TheDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.media.RingtoneManager.ACTION_RINGTONE_PICKER;
 import static android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
-import static com.qadr.todo.AddActivity.SETTINGS_CODE;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final int RINGTONE_CODE = 11, CALL_CODE = 122;
     String from;
     public LinearLayout parent;
+
+    static Map<String, Integer> tones = new HashMap<>();
+
+    static void putTones() {
+        tones.put("Alarming", R.raw.alarming);
+        tones.put("Break Forth", R.raw.break_forth);
+        tones.put("Bus Horn", R.raw.bus_horn);
+        tones.put("Clicking", R.raw.clicking);
+        tones.put("Congratulations", R.raw.congratulations);
+        tones.put("Door Bell", R.raw.door_bell);
+        tones.put("Happy Jump", R.raw.happy_jump);
+        tones.put("Oringz", R.raw.oringz_w446);
+        tones.put("Pluck", R.raw.pluck);
+        tones.put("Sorted", R.raw.sorted);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +102,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
-        Preference ringtone, clearAll;
+        Preference clearAll;
         SwitchPreferenceCompat vibrate, fullscreen, notification, call;
+        CustomListPreference sounds;
         private Context context;
         Handler handler;
         LinearLayout parentLayout;
@@ -96,34 +112,6 @@ public class SettingsActivity extends AppCompatActivity {
         public SettingsFragment(LinearLayout linearLayout) {
             this.parentLayout = linearLayout;
         }
-
-        ActivityResultLauncher<Intent> mStartForResult =
-                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                        new ActivityResultCallback<ActivityResult>() {
-                            @Override
-                            public void onActivityResult(ActivityResult result) {
-                                if (result.getResultCode() == Activity.RESULT_OK) {
-                                    Intent intent = result.getData();
-                                    // Handle the Intent
-                                    Uri uri = intent.getParcelableExtra(EXTRA_RINGTONE_PICKED_URI);
-
-                                    // get ringtone title
-                                    Ringtone tone = RingtoneManager.getRingtone(getContext(), uri);
-                                    String title = tone.getTitle(getContext());
-                                    ringtone.setSummary(title);
-
-                                    // saved ringtone
-                                    SharedPreferences sharedPreferences = AlarmReceiver.SettingsSharedPreference.getInstance(getContext());
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("ringtone_name", title);
-                                    editor.putString("ringtone_uri", String.valueOf(uri));
-                                    editor.apply();
-                                    Log.e("onActivityResult- ", title);
-                                    Log.i("onActivityResult- ", String.valueOf(uri));
-                                    Log.i("onActivityResult- ", intent.getExtras().toString());
-                                }
-                            }
-                        });
 
         ActivityResultLauncher<String> requestCallPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                 new ActivityResultCallback<Boolean>() {
@@ -152,31 +140,26 @@ public class SettingsActivity extends AppCompatActivity {
             context = getActivity();
             handler = new Handler();
 
-            ringtone = findPreference("ringtone");
             vibrate = findPreference("vibrate");
             fullscreen = findPreference("fullscreen");
             notification = findPreference("notifications");
             clearAll = findPreference("clear");
             call = findPreference("call");
+            sounds = findPreference("tone_list");
 
             call.setOnPreferenceChangeListener((preference, newValue) -> checkCallPermission());
-
-            ringtone.setOnPreferenceClickListener(preference -> {
-                Intent intent = new Intent(ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM | TYPE_NOTIFICATION);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-//                intent.putExtra("REQUEST_CODE", RINGTONE_CODE);
-//                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, true);
-                // Try to invoke the intent.
-                try {
-                    mStartForResult.launch(intent);
-//                    startActivityForResult(intent, RINGTONE_CODE);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getContext(), "No app to handle the request", Toast.LENGTH_SHORT).show();
+            sounds.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Log.d( "onPreferenceChange: ", newValue.toString());
+                    return true;
                 }
-                return true;
+            });
+            sounds.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    return true;
+                }
             });
             clearAll.setOnPreferenceClickListener(preference -> {
                 new MaterialAlertDialogBuilder(context)
@@ -188,10 +171,8 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
             SharedPreferences sharedPreferences = AlarmReceiver.SettingsSharedPreference.getInstance(context);
-            Ringtone tone = RingtoneManager.getRingtone(this.getContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            String title = tone.getTitle(this.getContext());
-            title = sharedPreferences.getString("ringtone_name", title);
-            ringtone.setSummary(title);
+            String title = sharedPreferences.getString("ringtone_name", "Alarming");
+            sounds.setSummary(title);
         }
 
         private boolean checkCallPermission() {
@@ -199,9 +180,9 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             } else {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CALL_PHONE)) {
-                    requestCallPermission.launch(Manifest.permission.CALL_PHONE);
-                } else {
                     showSnackBar();
+                } else {
+                    requestCallPermission.launch(Manifest.permission.CALL_PHONE);
                 }
                 return false;
             }

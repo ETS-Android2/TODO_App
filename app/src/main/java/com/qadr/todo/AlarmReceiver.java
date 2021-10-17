@@ -36,6 +36,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String MY_CALL_ACTION_DIAL = "com.qadr.call.dialer";
     public static final String MY_CALL_ACTION_CALL = "com.qadr.call.directCall";
     public static final long[] Vibrate = new long[]{1000, 50, 50, 100, 1000};
+    public static Ringtone ringtone;
 
     @Override
     public void onReceive(Context context, Intent mIntent) {
@@ -113,7 +114,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private static void createNotification(Context context, TodoWork work) {
         createNotificationChannel(context);
-        playSound(context, 9000, 3000);
+        playSound(context, getRingtone(context), 8000, 1500);
         Intent markIntent = new Intent(context, AlarmReceiver.class);
         markIntent.setAction(MARK_WORK_ACTION);
         markIntent.putExtra("uid", work.getUid());
@@ -234,19 +235,19 @@ public class AlarmReceiver extends BroadcastReceiver {
         Thread thread = new Thread(() -> TheDatabase.getInstance(context).todoDao().updateDone(id, true));
         thread.start();
     }
-
-
     // Get ringtone from sharedPreference
     public static Uri getRingtone(Context context) {
-        String str = SettingsSharedPreference.getInstance(context).getString("ringtone_uri",
-                String.valueOf(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)));
-        Log.d("getRingtone: ", str);
+        Integer tone_res = SettingsSharedPreference.getInstance(context).getInt("ringtone_res", R.raw.alarming);
+        Log.d("getRingtone: ", tone_res.toString());
+        String str = "android.resource://"+context.getPackageName()+"/" + tone_res;
         return Uri.parse(str);
     }
 
-    public static void playSound(Context context, long milli, long interval) {
-        Uri uri = getRingtone(context);
-        final Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
+    public static void playSound(Context context, Uri sound, long milli, long interval) {
+        if (ringtone != null) {
+            ringtone.stop();
+        }
+        ringtone = RingtoneManager.getRingtone(context, sound);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ringtone.setVolume((float) 1.0);
         }
@@ -272,6 +273,12 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Log.e("onFinish: ", "finish here");
             }
         }.start();
+    }
+
+    public static void stopSound(){
+        if (ringtone != null && ringtone.isPlaying()) {
+            ringtone.stop();
+        }
     }
 
     public static class SettingsSharedPreference {

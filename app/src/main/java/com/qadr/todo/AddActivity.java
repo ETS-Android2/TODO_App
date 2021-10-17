@@ -281,9 +281,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             selectContact();
         }else {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)){
-                contactRequestPermission.launch(Manifest.permission.READ_CONTACTS);
-            }else{
                 showSnackBar();
+            }else{
+                contactRequestPermission.launch(Manifest.permission.READ_CONTACTS);
             }
         }
     }
