@@ -1,8 +1,10 @@
 package com.qadr.todo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +67,18 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
             holder.todoNote.setVisibility(View.GONE);
             holder.noteText.setVisibility(View.GONE);
         }else holder.todoNote.setText(todoWork.getNote());
-        holder.categoryIcon.setImageDrawable(ContextCompat.getDrawable(context, _icons[categories.indexOf(StringUtils.capitalize(todoWork.getCategory()))]));
+        holder.categoryIcon.setImageDrawable(ContextCompat.getDrawable(context, getIcon(todoWork.getCategory())));
         //hide mark done button if task has been completed
         if (todoWork.isDone()){
             holder.markBtn.setVisibility(View.GONE);
             holder.markIcon.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.mark));
             holder.markIcon.setVisibility(View.VISIBLE);
         }
+    }
+
+    Integer getIcon (String category) {
+        int index = categories.indexOf(StringUtils.capitalize(category));
+        return  (index == -1) ? R.drawable.customize_item: _icons[index];
     }
 
     public void setList(List<TodoWork> list) {

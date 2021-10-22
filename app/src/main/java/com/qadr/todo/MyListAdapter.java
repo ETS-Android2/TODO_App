@@ -1,5 +1,6 @@
 package com.qadr.todo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -91,6 +92,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
                 int drawable = list_icons.get(position) == null ? R.drawable.customize_item : list_icons.get(position);
                 intent.putExtra("icon", drawable);
                 context.startActivity(intent);
+                ((Activity) context).finish();
             });
         }
     }
@@ -106,7 +108,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         .setNegativeButton(context.getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
         .setPositiveButton(context.getString(R.string.create), (dialog, which) -> {
 
-            String text  = editText.getText().toString().trim();
+            @NonNull String text  = editText.getText().toString().trim();
             if(!text.isEmpty()){
                 if(!existIn(categories, text)){
                     categories.add(1, StringUtils.capitalize(text));

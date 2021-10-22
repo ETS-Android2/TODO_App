@@ -45,7 +45,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private SearchView searchView;
     private String category;
     private int icon, todayPositionInAppBar;
-    private ImageView iconView;
+    private ImageView iconView, calendarIcon;
     private String noText;
     private List<String> categories;
     private final SimpleDateFormat dateTitleFormat = new SimpleDateFormat("EEEE dd, MMM", Locale.getDefault());
@@ -94,6 +94,8 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private void initViews() {
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         allBtn = findViewById(R.id.all_btn);
+        calendarIcon = findViewById(R.id.calendarIcon);
+        calendarIcon.setOnClickListener(this::showCalendar);
         allBtn.setOnClickListener(v -> {
             if(!isAllBtn) {
                 showAll();
@@ -165,7 +167,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             calendar.setTimeInMillis(selection);
             appBarRecyclerAdapter.checkDate(calendar.getTime());
             filterListByDate(calendar.getTime());
-            dateSelectedMilli = (long) selection;
+            dateSelectedMilli = selection;
 //            Toast.makeText(this, calendar.toString(), Toast.LENGTH_SHORT).show();
         });
         datePicker.show(getSupportFragmentManager(), "datePicker");
@@ -212,6 +214,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             searchView.setIconified(true);
         } else {
             startActivity(new Intent(TodoActivity.this, ListActivity.class));
+            finish();
         }
     }
 

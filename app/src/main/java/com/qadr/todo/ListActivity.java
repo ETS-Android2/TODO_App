@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,10 +35,6 @@ public class ListActivity extends AppCompatActivity {
         initViews();
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
-//        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
-        MobileAds.initialize(this, initializationStatus -> {
-
-        });
     }
 
     private void initViews(){
@@ -82,11 +79,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
         return true;
@@ -96,6 +88,7 @@ public class ListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_settings){
             startActivity(new Intent(ListActivity.this, SettingsActivity.class).putExtra("from", "list"));
+            finish();
         }
         return false;
     }

@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,8 +74,8 @@ public class SettingsActivity extends AppCompatActivity {
         from = getIntent().getExtras().getString("from");
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
-        parent = findViewById(R.id.coordinator);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        parent = findViewById(R.id.coordinator);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -86,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         AdView adView = findViewById(R.id.adView);
+        Log.d( "onCreate: settings",  "before ad");
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
@@ -93,12 +95,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
          if(from.equals("list")) {
-            startActivity(new Intent(SettingsActivity.this, ListActivity.class));
+            startActivity(new Intent(this, ListActivity.class));
         }else if(from.equals("todo")) {
-            startActivity(new Intent(SettingsActivity.this, TodoActivity.class).putExtra("category", "all").putExtra("icon", MyListAdapter._icons[0]));
-        } else {
-            super.onBackPressed();
+            startActivity(new Intent(this, TodoActivity.class).putExtra("category", "all").putExtra("icon", MyListAdapter._icons[0]));
         }
+         finish();
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -128,9 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         ActivityResultLauncher<Intent> appSettingsIntent = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    checkCallPermission();
-                }
+                result -> checkCallPermission()
         );
 
 
@@ -148,19 +147,11 @@ public class SettingsActivity extends AppCompatActivity {
             sounds = findPreference("tone_list");
 
             call.setOnPreferenceChangeListener((preference, newValue) -> checkCallPermission());
-            sounds.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Log.d( "onPreferenceChange: ", newValue.toString());
-                    return true;
-                }
+            sounds.setOnPreferenceChangeListener((preference, newValue) -> {
+                Log.d( "onPreferenceChange: ", newValue.toString());
+                return true;
             });
-            sounds.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    return true;
-                }
-            });
+            sounds.setOnPreferenceClickListener(preference -> true);
             clearAll.setOnPreferenceClickListener(preference -> {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle(getString(R.string.delete_alert_title))

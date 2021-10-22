@@ -35,7 +35,7 @@
             ads:adSize="BANNER"
             android:layout_gravity="center_horizontal"
             ads:adUnitId="ca-app-pub-9146947512063516/8492318053"
-            android:layout_marginBottom="10dp">
+            android:layout_marginVertical="10dp">
         </com.google.android.gms.ads.AdView>
 
         <androidx.core.widget.NestedScrollView

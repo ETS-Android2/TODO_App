@@ -7,9 +7,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/weekDay"
-        android:text="Tue"
+        android:text=""
         android:textSize="12sp"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:padding="10dp"/>
 
 
@@ -17,7 +17,7 @@
         android:id="@+id/dayNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="24"
+        android:text=""
         android:fontFamily="@font/firasans_regular"
         style="@style/Widget.App.Button.OutlinedButton.AppBarButton"
         />

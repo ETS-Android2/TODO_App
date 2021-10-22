@@ -228,6 +228,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         List<String> categories = Arrays.asList(getResources().getStringArray(R.array.categories));
         intent.putExtra("icon", _icons[categories.indexOf(StringUtils.capitalize(cat))]);
         startActivity(intent);
+        finish();
     }
 
     private void showDateTimePicker() {
@@ -359,8 +360,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
     ActivityResultLauncher<Intent> appSettingsIntent = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                checkContactPermission();
-            }
+            result -> checkContactPermission()
     );
 }

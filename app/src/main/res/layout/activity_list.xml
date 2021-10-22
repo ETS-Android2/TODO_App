@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bk"
+    android:background="@mipmap/bkg"
     tools:context=".TodoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:liftOnScroll="true"
+        app:liftOnScroll="false"
+        app:elevation="0dp"
+        android:backgroundTint="@null"
         android:background="@null">
 
         <com.google.android.material.appbar.MaterialToolbar

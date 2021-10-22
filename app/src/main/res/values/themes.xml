@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Todo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#BFA8E8</item>
+        <item name="colorPrimary">@color/my_primary_color</item>
         <item name="colorPrimaryVariant">#8765C3</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -10,8 +10,9 @@
         <item name="colorSecondaryVariant">#692EA5</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
 
     <style name="Customize_Add_Dialog" parent="Theme.MaterialComponents.Light.Dialog">

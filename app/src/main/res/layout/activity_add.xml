@@ -19,12 +19,11 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/white"
             app:layout_scrollFlags="noScroll"
             app:navigationIcon="@drawable/ic_baseline_close_24_black"
             app:title="@string/new_task"
             android:textAlignment="center"
-            app:titleTextColor="#AE332F2F" />
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,7 +38,7 @@
         ads:adSize="BANNER"
         android:layout_gravity="center_horizontal"
         ads:adUnitId="ca-app-pub-9146947512063516/9884279012"
-        android:layout_marginBottom="10dp"
+        android:layout_marginVertical="10dp"
         />
 
     <androidx.core.widget.NestedScrollView
@@ -99,6 +98,7 @@
 
 
             <EditText
+                android:inputType="text"
                 android:id="@+id/addTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:drawableLeft="@drawable/add_local_phone_24"
+                    android:drawableStart="@drawable/add_local_phone_24"
                     android:drawablePadding="30dp"
                     android:hint="@string/add_phone_number"
                     android:padding="10dp"
@@ -159,6 +159,7 @@
                     android:layout_centerHorizontal="true"
                     android:id="@+id/contactBtn"
                     android:src="@drawable/add_contacts_24"
+                    android:contentDescription="Click to choose telephone number"
                     android:layout_alignParentEnd="true"/>
             </RelativeLayout>
 
@@ -178,7 +179,7 @@
                     android:id="@+id/remindBtn"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/add_outline_notifications_24"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/remind_me" />
 
                 <TextView
                     android:textStyle="italic"
