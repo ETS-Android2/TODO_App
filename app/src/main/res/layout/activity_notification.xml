@@ -6,31 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NotificationActivity"
-    android:padding="20dp"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="30dp"
     android:background="@mipmap/bkground">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Operation feed the nation"
-        android:textSize="25sp"
-        android:id="@+id/name"
-        android:layout_marginTop="50dp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/name"
-        android:textSize="17sp"
-        android:text="May 27, 2020"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp"/>
 
 
     <TextView
@@ -38,14 +16,47 @@
         android:layout_height="wrap_content"
         android:id="@+id/time"
         android:textStyle="bold|italic"
-        android:textSize="90sp"
+        android:textSize="30sp"
         android:text="20:30"
         android:textColor="@color/white"
-        android:layout_below="@id/date"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/time"
+        android:textSize="17sp"
+        android:text="May 27, 2020"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Trip to Austria"
+        android:textSize="40sp"
+        android:id="@+id/name"
+        android:layout_below="@id/date"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Make necessary arrangements for your trip to Austria"
+        android:textSize="20sp"
+        android:id="@+id/note"
+        android:layout_below="@id/name"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/action_fab"
@@ -54,20 +65,20 @@
         android:contentDescription="@string/mark_work_done_or_make_call_in_case_of_calls"
         android:text="@string/mark_as_done"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/time"
+        android:layout_below="@id/note"
         android:layout_marginTop="70dp"
         app:icon="@drawable/list_call_40"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/close_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:contentDescription="@string/cancel_the_notification"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        app:srcCompat="@drawable/ic_baseline_close_24_black"/>
+        android:text="@string/cancel"
+        android:backgroundTint="@color/red"
+        app:icon="@drawable/ic_baseline_close_24_black"/>
 
 
 </RelativeLayout>

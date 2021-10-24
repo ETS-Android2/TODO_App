@@ -2,7 +2,6 @@ package com.qadr.todo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,7 +43,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private SearchView searchView;
     private String category;
     private int icon, todayPositionInAppBar;
-    private ImageView iconView, calendarIcon;
+    private ImageView iconView;
     private String noText;
     private List<String> categories;
     private final SimpleDateFormat dateTitleFormat = new SimpleDateFormat("EEEE dd, MMM", Locale.getDefault());
@@ -94,7 +92,7 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private void initViews() {
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         allBtn = findViewById(R.id.all_btn);
-        calendarIcon = findViewById(R.id.calendarIcon);
+        ImageView calendarIcon = findViewById(R.id.calendarIcon);
         calendarIcon.setOnClickListener(this::showCalendar);
         allBtn.setOnClickListener(v -> {
             if(!isAllBtn) {

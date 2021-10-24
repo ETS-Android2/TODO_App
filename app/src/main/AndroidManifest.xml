@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Todo">
+        <activity android:name=".ReportActivity"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".ListActivity"/>
+        <activity android:name=".ListActivity" />
 
         <receiver
             android:name=".BootUp"

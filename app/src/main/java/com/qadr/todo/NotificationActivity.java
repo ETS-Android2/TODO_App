@@ -36,12 +36,14 @@ public class NotificationActivity extends AppCompatActivity {
             actionButton.setOnClickListener(v -> markDone());
         }
         cancelBtn.setOnClickListener(v -> finish());
-        TextView name, date , time;
+        TextView name, date , time, note;
         name = findViewById(R.id.name);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
+        note = findViewById(R.id.note);
         name.setText(todoWork.getName());
         date.setText(todoWork.getDate());
+        note.setText(todoWork.getNote());
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(todoWork.getTimeInMilli());
         time.setText(TodoRecyclerAdapter.timeText(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)));
