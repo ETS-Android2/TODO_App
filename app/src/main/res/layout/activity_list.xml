@@ -43,5 +43,18 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_cat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#662CCF"
+        android:layout_gravity="bottom|end"
+        app:tint="@color/white"
+        android:tooltipText="Add Category"
+        android:src="@drawable/ic_baseline_plus_24"
+        android:contentDescription="@string/add_task" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

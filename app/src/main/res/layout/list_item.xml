@@ -52,31 +52,4 @@
             android:layout_below="@+id/list_category"
             android:layout_marginTop="8dp"/>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/customize_parent"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
-        android:layout_gravity="center"
-        android:elevation="0dp"
-        android:background="@color/Transparent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/customize_icon"
-            android:src="@drawable/customize_add_24"
-            android:layout_centerHorizontal="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/customize"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/customize_icon"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-
-
 </com.google.android.material.card.MaterialCardView>

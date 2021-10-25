@@ -31,6 +31,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.github.angads25.toggle.widget.LabeledSwitch;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -55,7 +56,6 @@ import java.util.Locale;
 import static com.qadr.todo.MyListAdapter._icons;
 
 public class AddActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final int PERMISSION_CONTACT_CODE = 101, READ_CONTACT_CODE = 100, SETTINGS_CODE = 102;
     private String from = "";
     private EditText dateTime, number;
     private TextInputLayout inputLayout, categoryInput, noteLayout;
@@ -104,13 +104,12 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         category = findViewById(R.id.autoComplete);
         numberRelative = findViewById(R.id.numberRelative);
         List<String> categories =  Arrays.asList(getResources().getStringArray(R.array.categories));
-        categories = removeFromList(categories, categories.size() - 1);
+        categories = removeFromList(categories, 0);
         Gson gson = new Gson();
         String jsonText = AlarmReceiver.SettingsSharedPreference.getInstance(this).getString("categories", null);
         categories.addAll(1, (jsonText  == null ? new ArrayList<>() : gson.fromJson(jsonText, ArrayList.class)));
         ArrayAdapter<String> adapter = new ArrayAdapter(this,
-                R.layout.category_list_item, removeFromList(categories, 0));
-        category.setText(StringUtils.capitalize(from));
+                R.layout.category_list_item, categories);
         category.setAdapter(adapter);
         category.setOnItemClickListener((parent, view, position, id) -> {
             String str = category.getText().toString().trim();
@@ -160,7 +159,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void updateWork() {
-        workToEdit.setName(name.getText().toString());
+        String str = name.getText().toString().trim();
+        if (!str.isEmpty()) workToEdit.setName(str);
+
         workToEdit.setNote(note.getText().toString());
         workToEdit.setNumber(number.getText().toString());
         workToEdit.setRemindMe(labeledSwitch.isOn());

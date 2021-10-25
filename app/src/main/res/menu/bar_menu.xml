@@ -17,5 +17,9 @@
         android:icon="@drawable/ic_baseline_settings_24"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/report"
+        android:title="@string/report"
+        app:showAsAction="never"/>
 
 </menu>

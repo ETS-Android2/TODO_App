@@ -62,6 +62,10 @@ public class TodoWork implements Parcelable {
         this.category = category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public long getUid() {
         return uid;
     }

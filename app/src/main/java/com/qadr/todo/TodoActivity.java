@@ -293,6 +293,9 @@ public class TodoActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             searchView.onActionViewExpanded();
         } else if (item.getItemId() == R.id.menu_settings) {
             startActivity(new Intent(TodoActivity.this, SettingsActivity.class).putExtra("from", "todo"));
+            finish();
+        } else if (item.getItemId() == R.id.report) {
+            startActivity(new Intent(this, ReportActivity.class));
         }
         return false;
     }

@@ -22,6 +22,7 @@
             app:layout_scrollFlags="noScroll"
             app:navigationIcon="@drawable/ic_baseline_close_24_black"
             app:title="@string/new_task"
+            app:navigationIconTint="@color/white"
             android:textAlignment="center"
             app:titleTextColor="@color/white" />
 

@@ -59,6 +59,7 @@
     <string name="pending_summary">if you don\'t want to receive notification for the task already scheduled after clearing all the tasks</string>
     <string name="clear_summary">Clear all saved task, This action cannot be undone</string>
     <string name="call_summary">For call tasks reminder, Choose whether to make call directly or go to dialer</string>
+    <string name="report">Report</string>
 
 
 </resources>
