@@ -25,8 +25,9 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
     private final ArrayList<String> categories;
     private final Context context;
     public static Integer[] _icons = {R.drawable.list_home_work_40,
-            R.drawable.list_home_40, R.drawable.list_work_40, R.drawable.list_library_books_40,R.drawable.list_call_40,
-            R.drawable.list_flight_40, R.drawable.list_fastfood_40, R.drawable.list_shopping_cart_40, R.drawable.ic_baseline_menu_40};
+            R.drawable.list_home_40, R.drawable.list_work_40, R.drawable.list_library_books_40, R.drawable.ic_baseline_medical_services_24,
+            R.drawable.list_flight_40, R.drawable.list_fastfood_40, R.drawable.list_shopping_cart_40,R.drawable.list_call_40,
+            R.drawable.ic_baseline_menu_40};
     public List<Integer> list_icons = new ArrayList<>(Arrays.asList(_icons));
     public ArrayList<String> customize_icons, customize_category;
     private final ArrayList<TodoWork.TaskNumber> taskNumbers;
@@ -105,20 +106,22 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 
     //get number of tasks in each category
     private String getTaskNumbers(String category) {
-        String task = context.getString(R.string.task);
+        String task = context.getString(R.string.task), plu = "";
         String pending = context.getString(R.string.pending);
         if(category.equalsIgnoreCase("all")){
             int total = 0;
             for (TodoWork.TaskNumber taskNumber : taskNumbers){
                 total += taskNumber.task_number;
             }
-            return total + " " + task;
+            if (total > 1) plu = "s";
+            return total + " " + task + plu;
         }else{
             for (TodoWork.TaskNumber taskNumber : taskNumbers) {
                 if(taskNumber.category.equalsIgnoreCase(category)){
                     if(taskNumber.task_number == 0){
                         return 0 + " " + task;
                     }
+                    if (taskNumber.task_number > 1) task = task + "s";
                     return  taskNumber.task_number + " " + task + ", "
                             + taskNumber.getPending_tasks() +  " " + pending;
                 }

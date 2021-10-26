@@ -40,8 +40,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent mIntent) {
+        stopSound();
         if (null != mIntent) {
-
             final int id = (int) mIntent.getExtras().getLong("uid", 0);
             Log.e(" "+ id, "onReceive: ");
             Handler handler = new Handler();

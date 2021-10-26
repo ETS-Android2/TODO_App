@@ -18,7 +18,7 @@
         android:textStyle="bold|italic"
         android:textSize="30sp"
         android:text="20:30"
-        android:textColor="@color/white"
+        android:textColor="@color/pink"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"/>
 
@@ -30,7 +30,7 @@
         android:layout_below="@+id/time"
         android:textSize="17sp"
         android:text="May 27, 2020"
-        android:textColor="@color/white"
+        android:textColor="@color/pink"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_below="@id/date"
         android:layout_marginTop="50dp"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="#C82B2B"
         />
 
     <TextView
@@ -55,7 +55,7 @@
         android:id="@+id/note"
         android:layout_below="@id/name"
         android:layout_marginTop="15dp"
-        android:textColor="@color/white"
+        android:textColor="@color/purple_500"
         />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

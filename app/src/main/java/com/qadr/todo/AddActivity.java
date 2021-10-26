@@ -102,6 +102,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         number = findViewById(R.id.addNumber);
         dateTime.setText(dateFormat.format(Calendar.getInstance().getTime()));
         category = findViewById(R.id.autoComplete);
+        if(from != null && !from.equalsIgnoreCase("all")) category.setText(StringUtils.capitalize(from));
         numberRelative = findViewById(R.id.numberRelative);
         List<String> categories =  Arrays.asList(getResources().getStringArray(R.array.categories));
         categories = removeFromList(categories, 0);

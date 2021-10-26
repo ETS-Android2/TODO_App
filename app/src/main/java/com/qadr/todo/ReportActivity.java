@@ -97,7 +97,7 @@ public class ReportActivity extends AppCompatActivity {
             pieChart.getDescription().setEnabled(false);
 
             Legend legend = pieChart.getLegend();
-            legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
             legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
             legend.setOrientation(Legend.LegendOrientation.VERTICAL);
             legend.setDrawInside(false);

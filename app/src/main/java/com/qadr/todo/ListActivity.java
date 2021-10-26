@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
     private ArrayList<String> categories = new ArrayList<>();
     public ArrayList<String> icons, cat_list;
     private ArrayList<TodoWork.TaskNumber> taskNumbers;
-    FloatingActionButton actionButton;
+    ExtendedFloatingActionButton actionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

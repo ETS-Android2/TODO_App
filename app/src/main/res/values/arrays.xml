@@ -5,10 +5,11 @@
         <item>Home</item>
         <item>Work</item>
         <item>Study</item>
-        <item>Call</item>
+        <item>Medical</item>
         <item>Travel</item>
         <item>Food</item>
         <item>Shopping</item>
+        <item>Call</item>
         <item>Others</item>
     </string-array>
 

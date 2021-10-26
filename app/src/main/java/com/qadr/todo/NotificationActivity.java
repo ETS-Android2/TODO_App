@@ -24,7 +24,7 @@ public class NotificationActivity extends AppCompatActivity {
             todoWork = bundle.getParcelable("work");
             category = todoWork.getCategory();
         }
-        FloatingActionButton cancelBtn = findViewById(R.id.close_btn);
+        ExtendedFloatingActionButton cancelBtn = findViewById(R.id.close_btn);
         ExtendedFloatingActionButton actionButton = findViewById(R.id.action_fab);
         if(category.equalsIgnoreCase("call")){
             actionButton.setIcon(ContextCompat.getDrawable(this, R.drawable.notification_call_24));
